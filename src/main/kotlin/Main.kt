@@ -6,7 +6,10 @@ object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        val dayChallenge: Day = December01()
+        val days: List<Day> = listOf(
+            December01
+        )
+        val dayChallenge = days.last()
 
         dayChallenge.challenge1()
         dayChallenge.challenge2()
