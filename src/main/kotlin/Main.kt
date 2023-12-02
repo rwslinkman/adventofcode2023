@@ -1,13 +1,14 @@
 package nl.rwslinkman.adventofcode2023
 
-import nl.rwslinkman.adventofcode2023.challenges.December01
+import nl.rwslinkman.adventofcode2023.challenges.*
 
 object Main {
 
     @JvmStatic
     fun main(args: Array<String>) {
         val days: List<Day> = listOf(
-            December01
+            December01,
+            December02
         )
         val dayChallenge = days.last()
 
