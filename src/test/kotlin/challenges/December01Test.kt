@@ -14,7 +14,7 @@ class December01Test {
             "a1b2c3d4e5f\n" +
             "treb7uchet"
 
-        val result = December01.sumOfDigits(sampleInput)
+        val result = December01.part1(sampleInput)
 
         assertEquals(142, result)
     }
@@ -30,7 +30,7 @@ class December01Test {
             "zoneight234\n" +
             "7pqrstsixteen"
 
-        val result = December01.sumOfDigitsAndWords(sampleInput)
+        val result = December01.part2(sampleInput)
 
         assertEquals(281, result)
     }

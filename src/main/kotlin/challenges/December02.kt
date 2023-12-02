@@ -1,18 +1,12 @@
 package nl.rwslinkman.adventofcode2023.challenges
 
-import nl.rwslinkman.adventofcode2023.AnsiColor
-import nl.rwslinkman.adventofcode2023.Day
-import nl.rwslinkman.adventofcode2023.Main
-import nl.rwslinkman.adventofcode2023.Main.paint
+import nl.rwslinkman.adventofcode2023.AdventChallenge
+import nl.rwslinkman.adventofcode2023.Puzzle
 
-object December02: Day {
-    override fun challenge1() {
-        val inputString: String = Main.getResourceFileContent("december02/input.txt")
-        val result = determineSumOfIdsOfPossibleGames(inputString)
-        println("The sum of possible game IDs is ${result.paint(AnsiColor.Green)}")
-    }
+@Puzzle("december02/input.txt")
+object December02 : AdventChallenge {
 
-    fun determineSumOfIdsOfPossibleGames(inputString: String): Int {
+    override fun part1(inputString: String): Any {
         val maxRed = 12
         val maxGreen = 13
         val maxBlue = 14
@@ -26,6 +20,17 @@ object December02: Day {
             redMax <= maxRed && greenMax <= maxGreen && blueMax <= maxBlue
         }
         return possibleGames.sumOf { it.gameId }
+    }
+
+    override fun part2(inputString: String): Any {
+        val games = parseInputToCubeGames(inputString)
+
+        return games.sumOf {
+            val redMax = it.cubeSets.maxOf { set -> set["red"] ?: 0 }
+            val greenMax = it.cubeSets.maxOf { set -> set["green"] ?: 0 }
+            val blueMax = it.cubeSets.maxOf { set -> set["blue"] ?: 0 }
+            redMax * greenMax * blueMax
+        }
     }
 
     private fun parseInputToCubeGames(inputString: String): List<CubeGame> {
@@ -50,22 +55,5 @@ object December02: Day {
         return games
     }
 
-    override fun challenge2() {
-        val inputString: String = Main.getResourceFileContent("december02/input.txt")
-        val result = determineMinimumCubesNeeded(inputString)
-        println("The sum of the power of the minimum cube set is ${result.paint(AnsiColor.Green)}")
-    }
-
-    fun determineMinimumCubesNeeded(inputString: String): Int {
-        val games = parseInputToCubeGames(inputString)
-
-        return games.sumOf {
-            val redMax = it.cubeSets.maxOf { set -> set["red"] ?: 0 }
-            val greenMax = it.cubeSets.maxOf { set -> set["green"] ?: 0 }
-            val blueMax = it.cubeSets.maxOf { set -> set["blue"] ?: 0 }
-            redMax * greenMax * blueMax
-        }
-    }
+    data class CubeGame(val gameId: Int, val cubeSets: List<Map<String, Int>>)
 }
-
-data class CubeGame(val gameId: Int, val cubeSets: List<Map<String, Int>>)

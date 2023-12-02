@@ -1,19 +1,12 @@
 package nl.rwslinkman.adventofcode2023.challenges
 
-import nl.rwslinkman.adventofcode2023.AnsiColor
-import nl.rwslinkman.adventofcode2023.Day
-import nl.rwslinkman.adventofcode2023.Main
-import nl.rwslinkman.adventofcode2023.Main.paint
+import nl.rwslinkman.adventofcode2023.AdventChallenge
+import nl.rwslinkman.adventofcode2023.Puzzle
 
-object December01: Day {
+@Puzzle("december01/input.txt")
+object December01: AdventChallenge {
 
-    override fun challenge1() {
-        val inputString: String = Main.getResourceFileContent("december01/input.txt")
-        val sumResult = sumOfDigits(inputString)
-        println("The ${"sum of the calibration values".paint(AnsiColor.Blue)} is ${sumResult.paint(AnsiColor.Red)} units")
-    }
-
-    fun sumOfDigits(inputString: String): Int {
+    override fun part1(inputString: String): Any {
         val inputLines = inputString.lines()
         val sumResult = inputLines.sumOf {
             val includedNumbers = it.split("").mapNotNull { c -> c.toIntOrNull() }
@@ -23,14 +16,7 @@ object December01: Day {
         return sumResult
     }
 
-    override fun challenge2() {
-        val inputString: String = Main.getResourceFileContent("december01/input.txt")
-        val sumResult = sumOfDigitsAndWords(inputString)
-
-        println("The improved ${"sum of the calibration values".paint(AnsiColor.Blue)} is ${sumResult.paint(AnsiColor.Red)} units")
-    }
-
-    fun sumOfDigitsAndWords(inputString: String): Int {
+    override fun part2(inputString: String): Any {
         val numberWordMap: Map<String, Int> = mapOf(
             "one" to 1,
             "two" to 2,

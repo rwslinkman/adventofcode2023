@@ -15,7 +15,7 @@ class December02Test {
             "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red\n" +
             "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
 
-        val result = December02.determineSumOfIdsOfPossibleGames(sampleData)
+        val result = December02.part1(sampleData)
 
         assertEquals(8, result)
     }
@@ -29,7 +29,7 @@ class December02Test {
             "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red\n" +
             "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"
 
-        val result = December02.determineMinimumCubesNeeded(sampleData)
+        val result = December02.part2(sampleData)
 
         assertEquals(2286, result)
     }
