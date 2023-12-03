@@ -5,6 +5,7 @@ import nl.rwslinkman.adventofcode2023.Puzzle
 
 @Puzzle("december03/input.txt")
 object December03 : AdventChallenge {
+
     override fun part1(inputString: String): Any {
         val (foundSymbols, foundNumbers) = parseInput(inputString)
         val possibleCoordinates: Set<Coordinate> = foundSymbols.flatMap {
@@ -77,5 +78,6 @@ object December03 : AdventChallenge {
     }
 
     data class Symbol(val symbol: String, val coord: Coordinate)
+
     data class FoundNumber(val num: Int, val coords: List<Coordinate>)
 }
