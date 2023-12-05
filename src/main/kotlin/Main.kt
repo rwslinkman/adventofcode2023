@@ -9,7 +9,8 @@ object Main {
         December01,
         December02,
         December03,
-        December04
+        December04,
+        December05,
     )
 
     @JvmStatic
