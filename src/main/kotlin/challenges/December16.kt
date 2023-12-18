@@ -14,7 +14,6 @@ object December16 : AdventChallenge {
         val start = Beam(East, 0, 0)
         val options = mutableListOf(start)
         val visited = mutableSetOf<Beam>()
-
         while (options.isNotEmpty()) {
             val currentItem = options.removeLast()
             visited.add(currentItem)
@@ -90,13 +89,13 @@ object December16 : AdventChallenge {
     private fun findBeam(data: List<Coordinate>, orig: Coordinate, direction: Direction): List<Beam> {
         return data.filter {
             it.x == (orig.x + direction.diffX) && it.y == (orig.y + direction.diffY)
+        }.map {
+            Beam(direction, it.x, it.y)
         }
-            .map {
-                Beam(direction, it.x, it.y)
-            }
     }
 
     data class Coordinate(val symbol: Symbol, val x: Int, val y: Int)
+
     data class Beam(val direction: Direction, val x: Int, val y: Int)
 
     enum class Direction(val diffX: Int, val diffY: Int) {
@@ -129,10 +128,8 @@ object December16 : AdventChallenge {
             starts.add(Beam(North, x, maxY))
         }
         for (y in 0..maxY) {
-            for (d in Direction.entries) {
-                starts.add(Beam(East, 0, y))
-                starts.add(Beam(West, maxX, y))
-            }
+            starts.add(Beam(East, 0, y))
+            starts.add(Beam(West, maxX, y))
         }
 
         return starts.maxOf { start ->
