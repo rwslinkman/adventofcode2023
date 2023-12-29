@@ -27,4 +27,15 @@ class December17Test {
 
         assertEquals(102, result)
     }
+
+    @Test
+    fun `test part 1 - Reddit suggestion`() {
+        val redditExample =
+            "112999\n" +
+            "911111"
+
+        val result = December17.part1(redditExample)
+
+        assertEquals(7, result)
+    }
 }

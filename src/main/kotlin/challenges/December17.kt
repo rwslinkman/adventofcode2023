@@ -13,45 +13,44 @@ object December17 : AdventChallenge {
             }
         }
 
-        val start = cityMap.first { it.x == 0 && it.y == 0 }
+        val startCity = cityMap.first { it.x == 0 && it.y == 0 }
         val maxX = cityMap.maxBy { it.x }.x
-        val end = cityMap.filter { it.x == maxX }.maxBy { it.y }
+        val endCity = cityMap.filter { it.x == maxX }.maxBy { it.y }
 
+        val startNode = Node(startCity, 1, Direction.East)
+        val startNode2 = Node(startCity, 1, Direction.South)
         val options = mutableListOf(
-            Route(0, 0, Direction.East, start),
+            Element(0, startNode),
+            Element(0, startNode2)
         )
-        val visited = mutableListOf<String>()
+        val visited = mutableSetOf<Node>()
         while (options.isNotEmpty()) {
-            val currentRoute = options.removeFirst()
+            val currentElement = options.removeFirst()
 
-            if (currentRoute.city == end) {
-                return currentRoute.heatLost
+            if (currentElement.node.city == endCity) {
+                return currentElement.heatLost
             }
 
-            if (currentRoute.key() in visited) {
-                continue
-            }
-            visited.add(currentRoute.key())
+            if(currentElement.node in visited) continue
 
             for (dir in Direction.entries) {
-                val nextStep = if (dir == currentRoute.direction) currentRoute.steps + 1 else 1
+                val nextStep = if (dir == currentElement.node.direction) currentElement.node.steps + 1 else 1
                 if (nextStep > MAX_STEPS_WITHOUT_TURN) {
                     continue
                 }
 
-                val nextX = currentRoute.city.x + dir.dX
-                val nextY = currentRoute.city.y + dir.dY
+                val nextX = currentElement.node.city.x + dir.dX
+                val nextY = currentElement.node.city.y + dir.dY
                 val nextCity = cityMap.find {
                     it.x == nextX && it.y == nextY
                 } ?: continue
-                if(nextCity == currentRoute.city) continue
 
-                val nextRoute = nextCity.let {
-                    Route(currentRoute.heatLost + it.heat, nextStep, dir, it)
-                }
-                if (nextRoute.key() !in visited) {
-                    options.add(nextRoute)
-                }
+                val nextNode = Node(nextCity, nextStep, dir)
+                if(nextNode in visited) continue
+
+                val nextElement = Element(currentElement.heatLost + nextNode.city.heat, nextNode)
+                if(nextElement in options) continue
+                options.add(nextElement)
             }
         }
         return 0
@@ -61,9 +60,13 @@ object December17 : AdventChallenge {
 
     data class City(val x: Int, val y: Int, val heat: Int)
 
-    data class Route(val heatLost: Int, val steps: Int, val direction: Direction, val city: City)
+    data class Node(val city: City, val steps: Int, val direction: Direction)
 
-    private fun Route.key(): String = "${city.x}_${city.y}_${direction.dX}_${direction.dY}_${steps}"
+    data class Element(val heatLost: Int, val node: Node)
+
+//    data class Route(val heatLost: Int, val steps: Int, val direction: Direction, val city: City)
+
+//    private fun Route.key(): String = "${city.x}_${city.y}_${direction.dX}_${direction.dY}_${steps}"
 
     enum class Direction(val dX: Int, val dY: Int) {
         North(0, -1),
